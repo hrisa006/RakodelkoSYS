@@ -15,7 +15,7 @@ if (!DB_NAME || !DB_USER || !DB_PASSWORD || !DB_HOST) {
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   dialect: "postgres",
-  logging: false, // Изключва конзолното „спамене“ – махни, ако ти трябва дебъг
+  logging: false,
 });
 
 export default sequelize;

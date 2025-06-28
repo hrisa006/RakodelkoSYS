@@ -10,6 +10,7 @@ import authRoutes from "./src/routes/authRoutes";
 import itemRoutes from "./src/routes/itemRoutes";
 import cartRoutes from "./src/routes/cartRoutes";
 import orderRoutes from "./src/routes/orderRoutes";
+import adminRoutes from "./src/routes/adminRoutes";
 
 import authenticateToken from "./src/middlewares/authToken";
 
@@ -27,6 +28,7 @@ app.use("/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", authenticateToken, (req: Request, res: Response) => {
   res

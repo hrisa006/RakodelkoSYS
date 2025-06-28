@@ -1,4 +1,3 @@
-// src/controllers/item.controller.ts
 import { Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import Item from "../models/itemModel";

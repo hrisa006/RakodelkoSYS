@@ -1,18 +1,25 @@
-import {
-  DataTypes,
-  Model,
-  Optional,
-  InferAttributes,
-  InferCreationAttributes,
-} from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
-import CartItem from "./cartItemModel";
-import Order from "./orderModel";
 
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  declare id?: number;
+export type UserRole = "user" | "admin";
+
+interface UserAttributes {
+  id: number;
+  username: string;
+  password: string;
+  role: UserRole;
+}
+
+type UserCreationAttributes = Optional<UserAttributes, "id" | "role">;
+
+class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
+  declare id: number;
   declare username: string;
   declare password: string;
+  declare role: UserRole;
 }
 
 User.init(
@@ -22,23 +29,25 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-
     username: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    role: {
+      type: DataTypes.ENUM("user", "admin"),
+      allowNull: false,
+      defaultValue: "user",
     },
   },
   {
     sequelize,
     modelName: "User",
     tableName: "Users",
-    timestamps: true,
   }
 );
 

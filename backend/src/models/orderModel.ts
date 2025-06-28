@@ -1,8 +1,18 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
+export type OrderStatus =
+  | "pending"
+  | "paid"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
+
 class Order extends Model {
-  id: any;
+  public id!: number;
+  public userId!: number;
+  public totalPrice!: number;
+  public status!: OrderStatus;
 }
 
 Order.init(
@@ -19,10 +29,16 @@ Order.init(
     totalPrice: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      defaultValue: 0,
+      validate: { min: 0 },
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM(
+        "pending",
+        "paid",
+        "shipped",
+        "delivered",
+        "cancelled"
+      ),
       allowNull: false,
       defaultValue: "pending",
     },

@@ -25,7 +25,7 @@ export const checkout = async (req: AuthenticatedRequest, res: Response) => {
 
   let total = 0;
   const orderItemsPayload = cartItems.map((ci) => {
-    const price = (ci as any).Item.price; // или ci.Item!.price ако ts знае
+    const price = (ci as any).Item.price;
     total += price * ci.quantity;
     return {
       itemId: ci.itemId,
