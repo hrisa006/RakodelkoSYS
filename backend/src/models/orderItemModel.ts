@@ -1,19 +1,16 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-class CartItem extends Model {
-    [x: string]: any;
-    quantity: any;
-}
+class OrderItem extends Model {}
 
-CartItem.init(
+OrderItem.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    userId: {
+    orderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -24,15 +21,23 @@ CartItem.init(
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 1,
+      validate: {
+        min: 1,
+      },
+    },
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      validate: {
+        min: 0,
+      },
     },
   },
   {
     sequelize,
-    modelName: "CartItem",
-    tableName: "CartItems",
-    timestamps: false,
+    modelName: "OrderItem",
+    tableName: "OrderItems",
   }
 );
 
-export default CartItem;
+export default OrderItem;

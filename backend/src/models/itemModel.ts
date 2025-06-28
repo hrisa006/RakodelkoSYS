@@ -56,7 +56,4 @@ Item.init(
   }
 );
 
-Item.hasMany(CartItem, { foreignKey: "itemId" });
-CartItem.belongsTo(Item, { foreignKey: "itemId" });
-
 export default Item;

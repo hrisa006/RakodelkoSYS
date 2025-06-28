@@ -5,10 +5,15 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
 import sequelize from "./src/config/database";
+
 import authRoutes from "./src/routes/authRoutes";
 import itemRoutes from "./src/routes/itemRoutes";
 import cartRoutes from "./src/routes/cartRoutes";
+import orderRoutes from "./src/routes/orderRoutes";
+
 import authenticateToken from "./src/middlewares/authToken";
+
+import "./src/models/associations";
 
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
@@ -21,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.get("/", authenticateToken, (req: Request, res: Response) => {
   res
