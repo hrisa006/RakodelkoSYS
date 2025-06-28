@@ -3,6 +3,7 @@ import Item from "./itemModel";
 import Order from "./orderModel";
 import OrderItem from "./orderItemModel";
 import CartItem from "./cartItemModel";
+import Review from "./reviewModel";
 
 // User ↔ Orders
 User.hasMany(Order, { foreignKey: "userId" });
@@ -23,3 +24,11 @@ CartItem.belongsTo(Item, { foreignKey: "itemId" });
 // User ↔ CartItems
 User.hasMany(CartItem, { foreignKey: "userId" });
 CartItem.belongsTo(User, { foreignKey: "userId" });
+
+// User ↔ Review
+User.hasMany(Review, { foreignKey: "userId", onDelete: "CASCADE" });
+Review.belongsTo(User, { foreignKey: "userId" });
+
+// Item ↔ Review
+Item.hasMany(Review, { foreignKey: "itemId", onDelete: "CASCADE" });
+Review.belongsTo(Item, { foreignKey: "itemId" });
