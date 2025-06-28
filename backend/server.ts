@@ -6,7 +6,8 @@ import bodyParser from "body-parser";
 
 import sequelize from "./src/config/database";
 import authRoutes from "./src/routes/authRoutes";
-import itemRoutes from './src/routes/itemRoutes';
+import itemRoutes from "./src/routes/itemRoutes";
+import cartRoutes from "./src/routes/cartRoutes";
 import authenticateToken from "./src/middlewares/authToken";
 
 const app = express();
@@ -18,7 +19,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/auth", authRoutes);
-app.use('/api/items', itemRoutes);
+app.use("/api/items", itemRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get("/", authenticateToken, (req: Request, res: Response) => {
   res

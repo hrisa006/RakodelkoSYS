@@ -6,6 +6,7 @@ import {
   InferCreationAttributes,
 } from "sequelize";
 import sequelize from "../config/database";
+import CartItem from "./cartItemModel";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id?: number;
@@ -39,5 +40,8 @@ User.init(
     timestamps: true,
   }
 );
+
+User.hasMany(CartItem, { foreignKey: "userId" });
+CartItem.belongsTo(User, { foreignKey: "userId" });
 
 export default User;
