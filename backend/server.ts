@@ -30,6 +30,7 @@ app.use("/api/items", itemRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/items/:itemId/reviews", reviewRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/admin", adminRoutes);
 
 app.get("/", authenticateToken, (req: Request, res: Response) => {

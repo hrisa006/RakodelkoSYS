@@ -42,7 +42,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     });
 
     res.status(201).json({ message: "Registration successful", user: payload });
-    // res.redirect("/map");
   } catch (error) {
     console.error("[register] →", error);
     res.status(500).send("Internal server error");
@@ -79,7 +78,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     });
 
     res.status(200).json({ message: "Login successful", user: payload });
-    // res.redirect("/map");
   } catch (error) {
     console.error("[login] →", error);
     res.status(500).send("Internal server error");

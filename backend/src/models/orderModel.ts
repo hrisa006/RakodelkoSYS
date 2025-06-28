@@ -13,6 +13,8 @@ class Order extends Model {
   public userId!: number;
   public totalPrice!: number;
   public status!: OrderStatus;
+    createdAt: any;
+    OrderItems: any;
 }
 
 Order.init(

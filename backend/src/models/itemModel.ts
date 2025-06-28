@@ -5,7 +5,6 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "../config/database";
-import CartItem from "./cartItemModel";
 
 class Item extends Model<InferAttributes<Item>, InferCreationAttributes<Item>> {
   declare id?: number;

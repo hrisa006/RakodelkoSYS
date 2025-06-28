@@ -4,6 +4,8 @@ import Order from "./orderModel";
 import OrderItem from "./orderItemModel";
 import CartItem from "./cartItemModel";
 import Review from "./reviewModel";
+import Shipping from "./shippingModel";
+import Media from "./mediaModel";
 
 // User ↔ Orders
 User.hasMany(Order, { foreignKey: "userId" });
@@ -32,3 +34,11 @@ Review.belongsTo(User, { foreignKey: "userId" });
 // Item ↔ Review
 Item.hasMany(Review, { foreignKey: "itemId", onDelete: "CASCADE" });
 Review.belongsTo(Item, { foreignKey: "itemId" });
+
+// Order ↔ Shipping
+Order.hasOne(Shipping, { foreignKey: "orderId", onDelete: "CASCADE" });
+Shipping.belongsTo(Order, { foreignKey: "orderId" });
+
+// Item ↔ Media
+Item.hasMany(Media, { foreignKey: "itemId", onDelete: "CASCADE" });
+Media.belongsTo(Item, { foreignKey: "itemId" });

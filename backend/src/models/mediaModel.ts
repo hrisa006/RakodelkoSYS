@@ -1,38 +1,33 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-class CartItem extends Model {
-  [x: string]: any;
-  quantity: any;
-}
+class Media extends Model {}
 
-CartItem.init(
+Media.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     itemId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    quantity: {
-      type: DataTypes.INTEGER,
+    url: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 1,
+    },
+    altText: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
     sequelize,
-    modelName: "CartItem",
-    tableName: "CartItems",
-    timestamps: false,
+    modelName: "Media",
+    tableName: "Media",
   }
 );
 
-export default CartItem;
+export default Media;
