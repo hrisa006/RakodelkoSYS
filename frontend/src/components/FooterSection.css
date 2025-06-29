@@ -1,0 +1,38 @@
+.footer-section {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.footer-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.footer-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-section li {
+  margin-top: 0.5rem;
+}
+
+.footer-section a {
+  color: var(--color-black);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+  color: var(--color-white);
+}
+
+.footer-section a.not-link:hover {
+  color: var(--color-black);
+  cursor: default;
+}
