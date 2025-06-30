@@ -13,7 +13,7 @@ const CartPage = () => {
   }, 0);
 
   if (isLoadingCart) return <p>Зареждане…</p>;
-  if (cart.length === 0) return <p>Количката е празна.</p>;
+  if (cart.length === 0) return <p style={{fontSize: "25px", fontWeight: "bold", textAlign: "-moz-initial"}}>Количката е празна.</p>;
 
   const handleCheckout = async () => {
     try {

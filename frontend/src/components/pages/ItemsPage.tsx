@@ -13,7 +13,7 @@ const ItemsPage: React.FC = () => {
   if (isLoadingItems) return <p style={{ textAlign: "center" }}>Зареждане…</p>;
 
   return (
-    <section className="items-page">
+    <section className="items-page" >
       <h2 className="page-title">Всички изделия</h2>
 
       {items.length === 0 ? (

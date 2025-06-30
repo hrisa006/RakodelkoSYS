@@ -82,7 +82,7 @@
 
 .review {
   background-color: #fdfdfd;
-  border-left: 4px solid #a14323;
+  border-left: 4px solid var(--color-accent);
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 6px;
