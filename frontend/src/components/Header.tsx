@@ -4,9 +4,11 @@ import logo from "../assets/logo-white.png";
 import { IoSearch } from "react-icons/io5";
 import { IoPersonSharp, IoCart } from "react-icons/io5";
 import { useAuth } from "../contexts/AuthContext";
+import { useShop } from "../contexts/ShopContext";
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const { cart } = useShop();
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
@@ -40,12 +42,11 @@ export default function Header() {
               <IoPersonSharp />
             </button>
 
-            
             <button onClick={() => navigate("/cart")} title="Количка">
               <IoCart className="icon-cart" style={{ fontSize: "30px" }} />
+              {cart.length > 0 && <span className="badge">{cart.length}</span>}
             </button>
 
-          
             {user && (
               <button onClick={handleLogout} className="btn-logout">
                 Изход
@@ -64,9 +65,6 @@ export default function Header() {
           </li>
           <li>
             <NavLink to="/items">Изделия</NavLink>
-          </li>
-          <li>
-            <NavLink to="/creators">За създатели</NavLink>
           </li>
         </ul>
       </nav>

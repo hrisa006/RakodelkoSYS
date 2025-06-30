@@ -29,7 +29,7 @@ Media.belongsTo(Item, { foreignKey: "itemId" });
 
 // Item ↔ CartItems
 Item.hasMany(CartItem, { foreignKey: "itemId" });
-CartItem.belongsTo(Item, { foreignKey: "itemId" });
+CartItem.belongsTo(Item, { foreignKey: "itemId", as: "item" });
 
 // Item ↔ OrderItems
 Item.hasMany(OrderItem, { foreignKey: "itemId" });

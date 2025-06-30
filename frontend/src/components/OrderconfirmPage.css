@@ -1,0 +1,41 @@
+.order-confirm {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--color-white);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.order-confirm h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--color-primary-dark);
+}
+
+.order-confirm p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: var(--color-gray-dark);
+}
+
+.order-confirm strong {
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.order-confirm button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.order-confirm button:hover {
+  background-color: var(--color-primary-dark);
+}

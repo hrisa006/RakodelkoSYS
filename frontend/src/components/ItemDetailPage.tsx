@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -9,6 +9,8 @@ import { fetchMedia } from "../api/media";
 import { fetchReviews, addReview } from "../api/reviews";
 import type { Item, Media, Review } from "../types/types";
 import "./ItemDetailPage.css";
+import { useShop } from "../contexts/ShopContext";
+import { useAuth } from "../contexts/AuthContext";
 
 interface ReviewForm {
   rating: number;
@@ -21,6 +23,20 @@ const ItemDetailsPage = () => {
   const [mediaList, setMediaList] = useState<Media[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const { user } = useAuth();
+  const { addToCart } = useShop();
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    if (!item) return;
+    if (!user) {
+      alert("Моля, влезте в профила си, за да добавите в количката.");
+      navigate("/login");
+      return;
+    }
+    addToCart(item.id, 1);
+  };
 
   const {
     register,
@@ -70,7 +86,6 @@ const ItemDetailsPage = () => {
 
   return (
     <div className="item-detail-container">
-
       <Carousel showThumbs={false} dynamicHeight={false}>
         {mediaList.length > 0
           ? mediaList.map((m) => (
@@ -91,7 +106,6 @@ const ItemDetailsPage = () => {
             ]}
       </Carousel>
 
- 
       <div className="item-info">
         <h2 className="item-title">{item.title}</h2>
         <p className="item-price">{item.price} лв.</p>
@@ -102,19 +116,17 @@ const ItemDetailsPage = () => {
 
         <div className="item-actions">
           {item.quantity > 0 ? (
-            <button>Добави в количката</button>
+            <button onClick={handleAddToCart}>Добави в количката</button>
           ) : (
             <p>Изчерпано</p>
           )}
         </div>
       </div>
 
-
       <section className="reviews">
         <h3>
           Ревюта ({reviews.length}) – Среден рейтинг: {avgRating.toFixed(1)}★
         </h3>
-
 
         {reviews.length === 0 && <p>Няма ревюта.</p>}
         {reviews.map((r) => (
@@ -124,7 +136,6 @@ const ItemDetailsPage = () => {
             <p>{r.comment}</p>
           </div>
         ))}
-
 
         <form className="review-form" onSubmit={handleSubmit(onSubmit)}>
           <h4>Добави ревю</h4>

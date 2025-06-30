@@ -23,9 +23,7 @@ export const getItemById = async (id: number): Promise<Item> => {
 export const fetchNewItems = async (): Promise<Item[]> =>
   (await api.get("/items?sort=new")).data;
 
-
 export const fetchMyItems = async (): Promise<Item[]> =>
   (await api.get("/items/me")).data;
 
-export const removeItem = (id: number) =>
-  api.delete(`/items/${id}`); 
+export const removeItem = (id: number) => api.delete(`/items/${id}`);

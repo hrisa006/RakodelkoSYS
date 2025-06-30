@@ -3,7 +3,6 @@ import { useShop } from "../contexts/ShopContext";
 import ItemCard from "./ItemCard";
 import "./ItemsPage.css";
 
-
 const ItemsPage: React.FC = () => {
   const { items, fetchItems, isLoadingItems } = useShop();
 

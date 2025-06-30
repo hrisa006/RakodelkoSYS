@@ -14,6 +14,12 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  --color-primary: #9a5dc6;
+  --color-primary-dark: #7b3fa6;
+  --color-accent: #da5e5e;
+  --color-white: #fff;
+  --color-gray-dark: #444;
 }
 
 body {

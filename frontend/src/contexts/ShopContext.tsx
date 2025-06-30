@@ -18,7 +18,7 @@ interface ShopContextType {
   removeFromCart: (itemId: number) => Promise<void>;
   updateCartQty: (itemId: number, qty: number) => Promise<void>;
   clearCart: () => Promise<void>;
-  checkout: () => Promise<void>;
+  checkout: () => Promise<Order>;
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
@@ -89,9 +89,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const checkout = async () => {
-    await ordersApi.checkout();
+    const order = await ordersApi.checkout();
+    setCart([]);
     await loadOrders();
-    await loadCart();
+    return order;
   };
 
   useEffect(() => {

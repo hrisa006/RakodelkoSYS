@@ -8,10 +8,11 @@ import {
 } from "../controllers/cartController";
 
 const router = Router();
+router.use(authenticateToken);
 
-router.get("/", authenticateToken, getCart);
-router.post("/", authenticateToken, addToCart);
-router.put("/:id", authenticateToken, updateCartItem);
-router.delete("/:id", authenticateToken, removeCartItem);
+router.get("/", getCart);
+router.post("/", addToCart);
+router.put("/:id", updateCartItem);
+router.delete("/:id", removeCartItem);
 
 export default router;

@@ -15,7 +15,12 @@ export const checkout = async (req: AuthenticatedRequest, res: Response) => {
 
   const cartItems = await CartItem.findAll({
     where: { userId },
-    include: [Item],
+    include: [
+      {
+        model: Item,
+        as: "item",
+      },
+    ],
   });
 
   if (cartItems.length === 0) {
@@ -25,7 +30,7 @@ export const checkout = async (req: AuthenticatedRequest, res: Response) => {
 
   let total = 0;
   const orderItemsPayload = cartItems.map((ci) => {
-    const price = (ci as any).Item.price;
+    const price = ci.item.price;
     total += price * ci.quantity;
     return {
       itemId: ci.itemId,
@@ -34,20 +39,35 @@ export const checkout = async (req: AuthenticatedRequest, res: Response) => {
     };
   });
 
-  await sequelize.transaction(async (t) => {
-    const order = await Order.create(
-      { userId, totalPrice: total },
-      { transaction: t }
-    );
+  try {
+    const result = await sequelize.transaction(async (t) => {
+      const order = await Order.create(
+        { userId, totalPrice: total },
+        { transaction: t }
+      );
 
-    await OrderItem.bulkCreate(
-      orderItemsPayload.map((oi) => ({ ...oi, orderId: order.id })),
-      { transaction: t }
-    );
+      await OrderItem.bulkCreate(
+        orderItemsPayload.map((oi) => ({ ...oi, orderId: order.id })),
+        { transaction: t }
+      );
 
-    await CartItem.destroy({ where: { userId }, transaction: t });
-    res.status(201).json({ orderId: order.id, totalPrice: total });
-  });
+      await CartItem.destroy({ where: { userId }, transaction: t });
+
+      const fullOrder = await Order.findByPk(order.id, {
+        include: [OrderItem],
+        transaction: t,
+      });
+
+      return fullOrder;
+    });
+
+    res.status(201).json(result);
+    return;
+  } catch (err) {
+    console.error("[checkout] Error:", err);
+    res.status(500).send("Failed to complete checkout.");
+    return;
+  }
 };
 
 export const getOrders = async (req: AuthenticatedRequest, res: Response) => {
@@ -66,11 +86,19 @@ export const getOrders = async (req: AuthenticatedRequest, res: Response) => {
 
 export const getOrder = async (req: AuthenticatedRequest, res: Response) => {
   const userId = (req.user as JwtPayload)?.id;
+  const orderId = parseInt(req.params.id);
+
+  if (isNaN(orderId)) {
+    res.status(400).send("Invalid order ID");
+    return;
+  }
+
   try {
     const order = await Order.findOne({
-      where: { id: req.params.id, userId },
+      where: { id: orderId, userId },
       include: [OrderItem],
     });
+
     order ? res.json(order) : res.status(404).send("Order not found");
   } catch (err) {
     console.error("[getOrder] Error:", err);

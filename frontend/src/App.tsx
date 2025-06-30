@@ -12,6 +12,8 @@ import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import ProfilePage from "./components/ProfilePage";
 import RequireAuth from "./components/RequireAuth";
+import CartPage from "./components/CartPage";
+import OrderConfirmPage from "./components/OrderConfirmPage";
 
 const queryClient = new QueryClient();
 
@@ -25,14 +27,37 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/new" element={<NewItemsPage />} />
-          <Route path="/items" element={<ItemsPage />}></Route>
-          <Route path="/items/:id" element={<ItemDetailsPage />} />
 
+          <Route path="/new" element={<NewItemsPage />} />
+          <Route path="/items" element={<ItemsPage />} />
+          <Route path="/items/:id" element={<ItemDetailsPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <RequireAuth>
+                <CartPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/orders/:id/confirm"
+            element={
+              <RequireAuth>
+                <OrderConfirmPage />
+              </RequireAuth>
+            }
+          />
         </Route>
       </Routes>
     </QueryClientProvider>

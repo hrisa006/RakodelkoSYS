@@ -56,7 +56,7 @@ const LoginPage = () => {
           {isSubmitting ? "Влизане..." : "Влез"}
         </button>
       </form>
-    
+
       <p className="login-register-cta">
         Нямаш профил? <Link to="/register">Създай нов</Link>
       </p>

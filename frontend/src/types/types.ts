@@ -17,6 +17,7 @@ export interface Item {
 
 export interface CartItem {
   id: number;
+  userId: number;
   itemId: number;
   quantity: number;
   item: Item;

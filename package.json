@@ -1,5 +1,17 @@
 {
+  "name": "rakodelko-monorepo",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n BACK,FRONT -c green,cyan \"npm:back\" \"npm:front\"",
+    "back": "npm --workspace backend run dev",
+    "front": "npm --workspace frontend run dev",
+    "build": "npm run build -w backend && npm run build -w frontend"
+  },
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "concurrently": "^8.2.2"
   }
 }

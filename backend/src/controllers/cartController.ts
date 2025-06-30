@@ -9,10 +9,11 @@ interface AuthenticatedRequest extends Request {
 
 export const getCart = async (req: AuthenticatedRequest, res: Response) => {
   const userId = (req.user as JwtPayload)?.id;
+
   try {
     const items = await CartItem.findAll({
       where: { userId },
-      include: [Item],
+      include: [{ model: Item, as: "item" }],
     });
     res.json(items);
   } catch (err) {
