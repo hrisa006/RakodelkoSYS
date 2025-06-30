@@ -1,7 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import api from "../api/axios";
+import { loginUser, logoutUser } from "../api/auth";
 
 interface User {
   id: number;
@@ -15,7 +16,6 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType>(null!);
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -28,14 +28,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (cookie) setUser(jwtDecode<User>(cookie));
   }, []);
 
-  const login = async (data: { username: string; password: string }) => {
-    await api.post("/auth/login", data);
+  const login = async ({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }) => {
+    await loginUser(username, password);
     const cookie = Cookies.get("auth_cookie");
     if (cookie) setUser(jwtDecode<User>(cookie));
   };
 
   const logout = async () => {
-    await api.post("/auth/logout");
+    await logoutUser();
     Cookies.remove("auth_cookie");
     setUser(null);
   };

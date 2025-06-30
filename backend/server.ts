@@ -3,6 +3,7 @@ import path from "path";
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 import sequelize from "./src/config/database";
 
@@ -11,6 +12,7 @@ import itemRoutes from "./src/routes/itemRoutes";
 import cartRoutes from "./src/routes/cartRoutes";
 import orderRoutes from "./src/routes/orderRoutes";
 import reviewRoutes from "./src/routes/reviewRoutes";
+import mediaRoutes from "./src/routes/mediaRoutes";
 import adminRoutes from "./src/routes/adminRoutes";
 
 import authenticateToken from "./src/middlewares/authToken";
@@ -20,16 +22,24 @@ import "./src/models/associations";
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/items/:itemId/reviews", reviewRoutes);
+app.use("/api/media", mediaRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/admin", adminRoutes);
 

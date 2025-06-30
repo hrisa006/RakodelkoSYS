@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Media from "../models/mediaModel";
+import Item from "../models/itemModel";
 
 export const uploadMedia = async (req: Request, res: Response) => {
   try {
@@ -16,6 +17,11 @@ export const uploadMedia = async (req: Request, res: Response) => {
       url: `/uploads/${file.filename}`,
       altText: file.originalname,
     });
+
+    const item = await Item.findByPk(itemId);
+    if (item && !item.imageUrl) {
+      await item.update({ imageUrl: `/uploads/${file.filename}` });
+    }
 
     res.status(201).json(media);
   } catch (err) {

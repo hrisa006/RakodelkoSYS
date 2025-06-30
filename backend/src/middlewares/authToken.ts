@@ -17,7 +17,7 @@ export const authenticateToken = (
   const token = req.cookies?.auth_cookie as string | undefined;
 
   if (!token) {
-    res.redirect("/auth/login");
+    res.status(401).json({ message: "Unauthenticated" });
     return;
   }
 
@@ -26,7 +26,7 @@ export const authenticateToken = (
     process.env.ACCESS_TOKEN_SECRET as string,
     (err, decoded) => {
       if (err) {
-        res.redirect("/auth/login");
+        res.status(401).json({ message: "Unauthenticated" });
         return;
       }
 

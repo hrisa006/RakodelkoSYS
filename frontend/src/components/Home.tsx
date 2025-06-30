@@ -1,7 +1,26 @@
 import { Link } from "react-router-dom";
-// import "./Home.css";
+import ItemCard from "./ItemCard";
+import { useState, useEffect } from "react";
+import { fetchNewItems } from "../api/items";
+import type { Item } from "../types/types";
+import "./Home.css";
+import "./ItemsPage.css";
 
 export default function Home() {
+  const [items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await fetchNewItems();
+        setItems(data);
+      } catch (err) {
+        console.error("Error fetching new items:", err);
+      }
+    };
+    load();
+  }, []);
+
   return (
     <main className="home">
       <section className="home__hero">
@@ -20,7 +39,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ───── New In Section ───── */}
       <section className="home__section">
         <div className="home__section-header">
           <h2>Ново в магазина</h2>
@@ -29,14 +47,12 @@ export default function Home() {
           </Link>
         </div>
         <div className="item-grid">
-          {/* TODO: Fetch latest items and map to <ItemCard /> */}
-          <div className="item-card placeholder" />
-          <div className="item-card placeholder" />
-          <div className="item-card placeholder" />
+          {items.slice(0, 5).map((item) => (
+            <ItemCard key={item.id} item={item} />
+          ))}
         </div>
       </section>
 
-      {/* ───── Sale Section ───── */}
       <section className="home__section home__section--accent">
         <div className="home__section-header">
           <h2>Разпродажба</h2>
@@ -52,7 +68,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ───── About Section ───── */}
       <section className="home__about">
         <h2>За Ръкоделко</h2>
         <p>
@@ -62,6 +77,42 @@ export default function Home() {
         <Link to="/about" className="btn btn--secondary">
           Научи повече
         </Link>
+      </section>
+
+      <section className="home__newsletter">
+        <div className="newsletter__left">
+          <h3>Запишете се за нашия бюлетин!</h3>
+          <form
+            className="newsletter__form"
+            onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Въведете своя имейл..." required />
+            <button type="submit">Запиши</button>
+          </form>
+        </div>
+
+        <div className="newsletter__right">
+          <h3>Последвайте ни на</h3>
+          <div className="social-icons">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer">
+              <i className="fab fa-facebook-square" />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer">
+              <i className="fab fa-instagram" />
+            </a>
+            <a
+              href="https://pinterest.com"
+              target="_blank"
+              rel="noopener noreferrer">
+              <i className="fab fa-pinterest" />
+            </a>
+          </div>
+        </div>
       </section>
     </main>
   );

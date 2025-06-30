@@ -19,6 +19,10 @@ Order.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Review, { foreignKey: "userId", onDelete: "CASCADE" });
 Review.belongsTo(User, { foreignKey: "userId" });
 
+// User ↔ Item
+User.hasMany(Item, { foreignKey: "sellerId", as: "items" });
+Item.belongsTo(User, { foreignKey: "sellerId", as: "seller" });
+
 // Item ↔ Media
 Item.hasMany(Media, { foreignKey: "itemId", onDelete: "CASCADE" });
 Media.belongsTo(Item, { foreignKey: "itemId" });

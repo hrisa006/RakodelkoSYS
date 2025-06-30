@@ -5,6 +5,7 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "../config/database";
+import User from "./userModel";
 
 class Item extends Model<InferAttributes<Item>, InferCreationAttributes<Item>> {
   declare id?: number;
@@ -14,6 +15,7 @@ class Item extends Model<InferAttributes<Item>, InferCreationAttributes<Item>> {
   declare quantity: number;
   declare imageUrl?: string;
   declare sellerId: number;
+  declare seller?: User;
 }
 
 Item.init(
