@@ -25,7 +25,7 @@ footer {
   width: 100%;
   height: auto;
   padding: 10px 0;
-  background-color: var(--color-accentMuted);
+  background-color: var(--color-accent-muted);
 }
 
 .copyright h4 {

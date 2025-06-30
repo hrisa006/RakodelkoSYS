@@ -1,27 +1,22 @@
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./App.css";
-import Home from "./components/Home";
-import MainLayout from "./layout/MainLayout";
-import { useEffect } from "react";
-import { injectCssVariables } from "./styles/theme";
-import ItemsPage from "./components/ItemsPage";
-import ItemDetailsPage from "./components/ItemDetailPage";
-import NewItemsPage from "./components/NewItemsPage";
-import RegisterPage from "./components/RegisterPage";
-import LoginPage from "./components/LoginPage";
-import ProfilePage from "./components/ProfilePage";
-import RequireAuth from "./components/RequireAuth";
-import CartPage from "./components/CartPage";
-import OrderConfirmPage from "./components/OrderConfirmPage";
+
+import MainLayout from "./components/templates/MainLayout";
+import ItemsPage from "./components/pages/ItemsPage";
+import ItemDetailsPage from "./components/pages/ItemDetailPage";
+import NewItemsPage from "./components/pages/NewItemsPage";
+import LoginPage from "./components/pages/auth/LoginPage";
+import RequireAuth from "./components/templates/RequireAuth";
+import Home from "./components/pages/Home";
+import OrderConfirmPage from "./components/pages/private/OrderConfirmPage";
+import CartPage from "./components/pages/private/CartPage";
+import ProfilePage from "./components/pages/private/ProfilePage";
+import RegisterPage from "./components/pages/auth/RegisterPage";
 
 const queryClient = new QueryClient();
 
 function App() {
-  useEffect(() => {
-    injectCssVariables();
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>

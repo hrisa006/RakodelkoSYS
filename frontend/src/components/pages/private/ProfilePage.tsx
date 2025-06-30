@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { fetchMyItems, createItem, removeItem } from "../api/items";
-import { uploadImage } from "../api/media";
-import type { Item } from "../types/types";
-import ItemCard from "../components/ItemCard";
+import { useAuth } from "../../../contexts/AuthContext";
+import { fetchMyItems, createItem, removeItem } from "../../../api/items";
+import { uploadImage } from "../../../api/media";
+import type { Item } from "../../../types/types";
+import ItemCard from "../../ItemCard";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {

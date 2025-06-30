@@ -16,19 +16,17 @@
 .upload-form textarea {
   padding: 0.6rem;
   border: 1px solid #c8c8c8;
+  background-color: transparent;
+  color: var(--color-black);
   border-radius: 6px;
 }
 .upload-form button {
   align-self: flex-start;
   padding: 0.5rem 1.25rem;
-  background: #a14323;
   color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-}
-.upload-form button:hover {
-  background: #7c321a;
 }
 
 .item-card-wrapper {
@@ -37,12 +35,12 @@
 
 .btn-delete {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 5px;
+  right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #c92f2f;
+  background: var(--color-accent);
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -55,5 +53,5 @@
 }
 
 .btn-delete:hover {
-  background: #a42222;
+  background: var(--color-accent-muted);
 }

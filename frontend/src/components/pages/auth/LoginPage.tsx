@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../api/auth";
-import { useAuth } from "../contexts/AuthContext";
+import { loginUser } from "../../../api/auth";
+import { useAuth } from "../../../contexts/AuthContext";
 import "./LoginPage.css";
 
 interface FormValues {

@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../assets/logo-white.png";
-import { IoSearch } from "react-icons/io5";
+// import { IoSearch } from "react-icons/io5";
 import { IoPersonSharp, IoCart } from "react-icons/io5";
+import { HiOutlineLogout } from "react-icons/hi";
 import { useAuth } from "../contexts/AuthContext";
 import { useShop } from "../contexts/ShopContext";
 
@@ -28,13 +29,15 @@ export default function Header() {
     <>
       <div className="header-banner">
         <div className="header-inner">
-          <img className="header-logo" src={logo} alt="Rakodelko logo" />
-          <div className="header-search">
+          <a href="/">
+            <img className="header-logo" src={logo} alt="Rakodelko logo" />
+          </a>
+          {/* <div className="header-search">
             <input type="text" placeholder="Търсене…" />
             <IoSearch
               style={{ color: "var(--color-white)", fontSize: "18px" }}
             />
-          </div>
+          </div> */}
           <div className="header-icons">
             <button
               onClick={handleProfileClick}
@@ -49,7 +52,7 @@ export default function Header() {
 
             {user && (
               <button onClick={handleLogout} className="btn-logout">
-                Изход
+                <HiOutlineLogout />
               </button>
             )}
           </div>

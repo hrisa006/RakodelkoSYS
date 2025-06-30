@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchOrder, downloadInvoice } from "../api/orders";
-import type { Order } from "../types/types";
+import { fetchOrder, downloadInvoice } from "../../../api/orders";
+import type { Order } from "../../../types/types";
 import "./OrderConfirmPage.css";
 
 export default function OrderConfirmPage() {

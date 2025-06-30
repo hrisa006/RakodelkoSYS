@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { registerUser } from "../api/auth";
-import { useAuth } from "../contexts/AuthContext";
+import { registerUser } from "../../../api/auth";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 

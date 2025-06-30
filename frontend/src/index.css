@@ -15,11 +15,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  --color-primary: #9a5dc6;
-  --color-primary-dark: #7b3fa6;
-  --color-accent: #da5e5e;
+  --color-primary: #568679;
+  --color-primary-dark: #1d464c;
+  --color-accent: #a37cc8;
+  --color-accent-muted: #3d365c;
   --color-white: #fff;
-  --color-gray-dark: #444;
+  --color-gray-dark: #000000;
 }
 
 body {

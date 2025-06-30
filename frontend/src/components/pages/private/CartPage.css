@@ -14,16 +14,19 @@
 }
 .cart-table input {
   width: 60px;
+  background-color: transparent;
+  color: var(--color-black);
+  border: 1px solid #ccc;
 }
 .cart-table button {
-  background: #d24e4e;
+  background: var(--color-accent);
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 .cart-table button:hover {
-  background: #b73838;
+  background: var(--color-accent-muted);
 }
 .cart-total {
   text-align: right;
@@ -32,11 +35,11 @@
 .btn-checkout {
   margin-left: 1rem;
   padding: 0.5rem 1rem;
-  background: #7c321a;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 4px;
 }
 .btn-checkout:hover {
-  background: #a14323;
+  background: var(--color-primary-dark);
 }

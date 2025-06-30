@@ -1,4 +1,4 @@
-import { useShop } from "../contexts/ShopContext";
+import { useShop } from "../../../contexts/ShopContext";
 import { Link, useNavigate } from "react-router-dom";
 import "./CartPage.css";
 

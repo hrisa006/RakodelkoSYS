@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchNewItems } from "../api/items";
-import type { Item } from "../types/types";
-import ItemCard from "./ItemCard";
+import { fetchNewItems } from "../../api/items";
+import type { Item } from "../../types/types";
+import ItemCard from "../ItemCard";
 import "./ItemsPage.css";
 
 const NewItemsPage = () => {

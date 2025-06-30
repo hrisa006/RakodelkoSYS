@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
 import type { JSX } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user } = useAuth();

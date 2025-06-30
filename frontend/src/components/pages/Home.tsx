@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import ItemCard from "./ItemCard";
 import { useState, useEffect } from "react";
-import { fetchNewItems } from "../api/items";
-import type { Item } from "../types/types";
 import "./Home.css";
 import "./ItemsPage.css";
+import ItemCard from "../ItemCard";
+import { fetchNewItems } from "../../api/items";
+import type { Item } from "../../types/types";
+import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa6";
 
 export default function Home() {
   const [items, setItems] = useState<Item[]>([]);
@@ -53,7 +54,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home__section home__section--accent">
+      {/* <section className="home__section home__section--accent">
         <div className="home__section-header">
           <h2>Разпродажба</h2>
           <Link to="/sale" className="link--more--light">
@@ -61,12 +62,11 @@ export default function Home() {
           </Link>
         </div>
         <div className="item-grid">
-          {/* TODO: Fetch items on sale */}
           <div className="item-card placeholder" />
           <div className="item-card placeholder" />
           <div className="item-card placeholder" />
         </div>
-      </section>
+      </section> */}
 
       <section className="home__about">
         <h2>За Ръкоделко</h2>
@@ -97,19 +97,19 @@ export default function Home() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer">
-              <i className="fab fa-facebook-square" />
+              <FaFacebookF />
             </a>
             <a
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer">
-              <i className="fab fa-instagram" />
+              <FaInstagram />
             </a>
             <a
               href="https://pinterest.com"
               target="_blank"
               rel="noopener noreferrer">
-              <i className="fab fa-pinterest" />
+              <FaPinterest />
             </a>
           </div>
         </div>

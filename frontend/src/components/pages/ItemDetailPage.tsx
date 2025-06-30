@@ -3,14 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-
-import { fetchItem } from "../api/items";
-import { fetchMedia } from "../api/media";
-import { fetchReviews, addReview } from "../api/reviews";
-import type { Item, Media, Review } from "../types/types";
+import type { Item, Media, Review } from "../../types/types";
 import "./ItemDetailPage.css";
-import { useShop } from "../contexts/ShopContext";
-import { useAuth } from "../contexts/AuthContext";
+import { useShop } from "../../contexts/ShopContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { fetchItem } from "../../api/items";
+import { fetchMedia } from "../../api/media";
+import { fetchReviews, addReview } from "../../api/reviews";
 
 interface ReviewForm {
   rating: number;
