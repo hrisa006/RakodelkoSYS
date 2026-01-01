@@ -16,7 +16,9 @@ const CartPage = () => {
   }, 0);
 
   if (isLoadingCart) return <p>Зареждане…</p>;
-  if (cart.length === 0) return <p style={{fontSize: "25px", fontWeight: "bold", textAlign: "-moz-initial"}}>Количката е празна.</p>;
+  if (cart.length === 0) {
+    return <p className="cart-empty">Количката е празна.</p>;
+  }
 
   const handleCheckout = async () => {
     if (!user) {
@@ -75,7 +77,9 @@ const CartPage = () => {
       </table>
 
       <div className="cart-total">
-        Общо: <strong>{total.toFixed(2)} лв.</strong>
+        <div className="cart-total-info">
+          Общо: <strong>{total.toFixed(2)} лв.</strong>
+        </div>
         <button onClick={handleCheckout} className="btn-checkout">
           Към поръчка
         </button>
