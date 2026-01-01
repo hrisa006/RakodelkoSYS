@@ -11,7 +11,7 @@ import RequireAuth from "./components/templates/RequireAuth";
 import Home from "./components/pages/Home";
 import AboutPage from "./components/pages/AboutPage";
 import OrderConfirmPage from "./components/pages/private/OrderConfirmPage";
-import CartPage from "./components/pages/private/CartPage";
+import CartPage from "./components/pages/CartPage";
 import ProfilePage from "./components/pages/private/ProfilePage";
 import RegisterPage from "./components/pages/auth/RegisterPage";
 

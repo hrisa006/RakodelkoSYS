@@ -1,7 +1,7 @@
-import { useShop } from "../../../contexts/ShopContext";
+import { useShop } from "../../contexts/ShopContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./CartPage.css";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const CartPage = () => {
   const navigate = useNavigate();
