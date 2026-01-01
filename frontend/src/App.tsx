@@ -9,6 +9,7 @@ import NewItemsPage from "./components/pages/NewItemsPage";
 import LoginPage from "./components/pages/auth/LoginPage";
 import RequireAuth from "./components/templates/RequireAuth";
 import Home from "./components/pages/Home";
+import AboutPage from "./components/pages/AboutPage";
 import OrderConfirmPage from "./components/pages/private/OrderConfirmPage";
 import CartPage from "./components/pages/private/CartPage";
 import ProfilePage from "./components/pages/private/ProfilePage";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/new" element={<NewItemsPage />} />
           <Route path="/items" element={<ItemsPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
 

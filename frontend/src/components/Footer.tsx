@@ -13,8 +13,7 @@ export default function Footer() {
           <FooterSection
             heading='За "Ръкоделко"'
             sectionData={[
-              { label: "За нас", href: "#" },
-              { label: "Нашата мисия", href: "#" },
+              { label: "За нас", href: "about" },
               { label: "Станете част от нас", href: "#" },
               { label: "Условия за използване", href: "#" },
               { label: "Блог", href: "#" },
