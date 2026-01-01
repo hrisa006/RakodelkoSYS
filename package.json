@@ -2,8 +2,8 @@
   "name": "rakodelko-monorepo",
   "private": true,
   "workspaces": [
-    "backend",
-    "frontend"
+    "./backend",
+    "./frontend"
   ],
   "scripts": {
     "dev": "concurrently -n BACK,FRONT -c green,cyan \"npm:back\" \"npm:front\"",
