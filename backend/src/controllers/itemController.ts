@@ -57,7 +57,13 @@ export const getItems = async (_req: Request, res: Response) => {
 
 export const getItem = async (req: Request, res: Response) => {
   try {
-    const item = await Item.findByPk(req.params.id);
+    const item = await Item.findByPk(req.params.id, {
+      include: {
+        model: User,
+        as: "seller",
+        attributes: ["username"],
+      },
+    });
     item ? res.json(item) : res.status(404).send("Item not found");
   } catch (err) {
     console.error("[getItem] Error:", err);
@@ -90,7 +96,14 @@ export const deleteItem = async (req: Request, res: Response) => {
 
 export const getMyItems = async (req: AuthenticatedRequest, res: Response) => {
   const userId = (req.user as JwtPayload).id;
-  const items = await Item.findAll({ where: { sellerId: userId } });
+  const items = await Item.findAll({
+    where: { sellerId: userId },
+    include: {
+      model: User,
+      as: "seller",
+      attributes: ["username"],
+    },
+  });
   res.json(items);
 };
 

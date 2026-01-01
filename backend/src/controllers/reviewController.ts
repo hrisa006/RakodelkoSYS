@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import Review from "../models/reviewModel";
 import Item from "../models/itemModel";
+import User from "../models/userModel";
 import { RatingValue } from "../models/reviewModel";
 
 interface AuthenticatedRequest extends Request {
@@ -38,7 +39,10 @@ export const createReview = async (
       rating,
       comment,
     });
-    res.status(201).json(review);
+    const reviewWithUser = await Review.findByPk(review.id, {
+      include: [{ model: User, attributes: ["username"] }],
+    });
+    res.status(201).json(reviewWithUser || review);
   } catch (error) {
     console.error("[createReview] Error:", error);
     res.status(500).send("Server error");
@@ -48,7 +52,11 @@ export const createReview = async (
 export const getReviews = async (req: Request, res: Response) => {
   const { itemId } = req.params;
   try {
-    const reviews = await Review.findAll({ where: { itemId } });
+    const reviews = await Review.findAll({
+      where: { itemId },
+      include: [{ model: User, attributes: ["username"] }],
+      order: [["createdAt", "DESC"]],
+    });
     res.json(reviews);
   } catch (error) {
     console.error("[getReviews] Error:", error);
@@ -82,7 +90,10 @@ export const updateReview = async (
       rating: rating ?? review.rating,
       comment: comment ?? review.comment,
     });
-    res.json(review);
+    const updated = await Review.findByPk(review.id, {
+      include: [{ model: User, attributes: ["username"] }],
+    });
+    res.json(updated || review);
   } catch (error) {
     console.error("[updateReview] Error:", error);
     res.status(500).send("Server error");
