@@ -7,7 +7,9 @@ export default function Footer() {
     <>
       <footer>
         <div className="footer-sections">
-          <img src={logo} alt="White logo of RakodelkoSYS" />
+          <a href="/" className="footer-logo">
+            <img src={logo} alt="White logo of RakodelkoSYS" />
+          </a>
           <FooterSection
             heading='За "Ръкоделко"'
             sectionData={[

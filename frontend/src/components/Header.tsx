@@ -29,8 +29,8 @@ export default function Header() {
     <>
       <div className="header-banner">
         <div className="header-inner">
-          <a href="/">
-            <img className="header-logo" src={logo} alt="Rakodelko logo" />
+          <a href="/" className="header-logo">
+            <img  src={logo} alt="Rakodelko logo" />
           </a>
           {/* <div className="header-search">
             <input type="text" placeholder="Търсене…" />
@@ -46,7 +46,7 @@ export default function Header() {
             </button>
 
             <button onClick={() => navigate("/cart")} title="Количка">
-              <IoCart className="icon-cart" style={{ fontSize: "30px" }} />
+              <IoCart className="icon-cart" style={{ fontSize: "20px" }} />
               {cart.length > 0 && <span className="badge">{cart.length}</span>}
             </button>
 
