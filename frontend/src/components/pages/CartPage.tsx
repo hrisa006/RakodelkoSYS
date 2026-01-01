@@ -27,9 +27,12 @@ const CartPage = () => {
       return;
     }
     try {
-      const order = await checkout();
-      console.log("ORDER:", order);
-      navigate(`/orders/${order.id}/confirm`);
+      const session = await checkout();
+      if (session.url) {
+        window.location.href = session.url;
+        return;
+      }
+      alert("Грешка при стартиране на плащането.");
     } catch (e) {
       alert("Грешка при създаване на поръчка.");
       console.error(e);

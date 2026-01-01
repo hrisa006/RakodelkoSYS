@@ -80,3 +80,15 @@ export const removeCartItem = async (
     res.status(500).send("Server error");
   }
 };
+
+export const clearCart = async (req: AuthenticatedRequest, res: Response) => {
+  const userId = (req.user as JwtPayload)?.id;
+
+  try {
+    await CartItem.destroy({ where: { userId } });
+    res.status(204).end();
+  } catch (err) {
+    console.error("[clearCart] Error:", err);
+    res.status(500).send("Server error");
+  }
+};

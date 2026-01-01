@@ -1,6 +1,11 @@
 import { Router } from "express";
 import authenticateToken from "../middlewares/authToken";
-import { checkout, getOrders, getOrder } from "../controllers/orderController";
+import {
+  checkout,
+  getOrders,
+  getOrder,
+  confirmOrderPayment,
+} from "../controllers/orderController";
 import { getInvoice } from "../controllers/invoiceController";
 import {
   getShipping,
@@ -13,6 +18,7 @@ const router = Router();
 router.use(authenticateToken);
 
 router.post("/checkout", checkout);
+router.post("/:orderId/confirm", confirmOrderPayment);
 router.get("/", getOrders);
 router.get("/:id", getOrder);
 

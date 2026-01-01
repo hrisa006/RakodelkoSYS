@@ -19,7 +19,7 @@ interface ShopContextType {
   removeFromCart: (itemId: number) => Promise<void>;
   updateCartQty: (itemId: number, qty: number) => Promise<void>;
   clearCart: () => Promise<void>;
-  checkout: () => Promise<Order>;
+  checkout: () => Promise<{ url: string; orderId: number }>;
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
@@ -174,10 +174,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!user) {
       throw new Error("auth_required");
     }
-    const order = await ordersApi.checkout();
-    setCart([]);
-    await loadOrders();
-    return order;
+    const session = await ordersApi.checkout();
+    return session;
   };
 
   const syncGuestCartToServer = async () => {
