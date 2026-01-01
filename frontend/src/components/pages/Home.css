@@ -124,11 +124,6 @@
   opacity: 0.8;
 }
 
-.item-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
 
 .home__about {
   text-align: center;
@@ -150,11 +145,6 @@
   margin-bottom: 2rem;
 }
 
-.item-card.placeholder {
-  aspect-ratio: 3 / 4;
-  background: #e9e6e4;
-  border-radius: 8px;
-}
 
 .home__newsletter {
   display: flex;

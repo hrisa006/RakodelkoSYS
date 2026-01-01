@@ -4,6 +4,7 @@ import { fetchMyItems, createItem, removeItem } from "../../../api/items";
 import { uploadImage } from "../../../api/media";
 import type { Item } from "../../../types/types";
 import ItemCard from "../../ItemCard";
+import "../../ItemGrid.css";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./Home.css";
-import "./ItemsPage.css";
 import ItemCard from "../ItemCard";
+import "../ItemGrid.css";
 import { fetchNewItems } from "../../api/items";
 import type { Item } from "../../types/types";
 import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa6";

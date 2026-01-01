@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useShop } from "../../contexts/ShopContext";
 import ItemCard from "../ItemCard";
+import "../ItemGrid.css";
 import "./ItemsPage.css";
 
 const ItemsPage: React.FC = () => {

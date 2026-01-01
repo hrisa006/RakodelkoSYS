@@ -1,6 +1,7 @@
 import React from "react";
 import type { Item } from "../types/types";
 import { Link } from "react-router-dom";
+import "./ItemCard.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
