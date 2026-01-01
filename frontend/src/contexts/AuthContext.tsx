@@ -18,14 +18,23 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>(null!);
 export const useAuth = () => useContext(AuthContext);
 
+const getUserFromCookie = (): User | null => {
+  const cookie = Cookies.get("auth_cookie");
+  if (!cookie) return null;
+  try {
+    return jwtDecode<User>(cookie);
+  } catch {
+    return null;
+  }
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => getUserFromCookie());
 
   useEffect(() => {
-    const cookie = Cookies.get("auth_cookie");
-    if (cookie) setUser(jwtDecode<User>(cookie));
+    setUser(getUserFromCookie());
   }, []);
 
   const login = async ({

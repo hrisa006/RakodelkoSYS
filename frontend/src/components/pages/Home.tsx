@@ -6,9 +6,11 @@ import "../ItemGrid.css";
 import { fetchNewItems } from "../../api/items";
 import type { Item } from "../../types/types";
 import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa6";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Home() {
   const [items, setItems] = useState<Item[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     const load = async () => {
@@ -34,9 +36,11 @@ export default function Home() {
             Открий ръчно изработени продукти, направени с любов от майстори в
             цяла България.
           </p>
-          <Link to="/register" className="btn btn--primary">
-            Регистрирай се
-          </Link>
+          {!user && (
+            <Link to="/register" className="btn btn--primary">
+              Регистрирай се
+            </Link>
+          )}
         </div>
       </section>
 

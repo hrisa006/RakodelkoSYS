@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { fetchMyItems, createItem, removeItem } from "../../../api/items";
 import { uploadImage } from "../../../api/media";
@@ -11,13 +11,14 @@ const ProfilePage = () => {
   const { user } = useAuth();
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [form, setForm] = useState({
     title: "",
     description: "",
     price: "",
     quantity: "1",
-    image: null as File | null,
+    images: [] as File[],
   });
 
   const loadItems = async () => {
@@ -37,7 +38,8 @@ const ProfilePage = () => {
   };
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, image: e.target.files?.[0] || null });
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    setForm({ ...form, images: files });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,8 +53,10 @@ const ProfilePage = () => {
         quantity: parseInt(form.quantity),
       });
 
-      if (form.image) {
-        await uploadImage(newItem.id, form.image);
+      if (form.images.length > 0) {
+        await Promise.all(
+          form.images.map((image) => uploadImage(newItem.id, image))
+        );
       }
 
       await loadItems();
@@ -61,8 +65,11 @@ const ProfilePage = () => {
         description: "",
         price: "",
         quantity: "1",
-        image: null,
+        images: [],
       });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } catch (err) {
       console.error("[createItem] error", err);
       alert("Грешка при създаване на изделие.");
@@ -83,9 +90,12 @@ const ProfilePage = () => {
 
   return (
     <main className="profile">
-      <h2>Профил на {user?.username}</h2>
+      <header className="profile__header">
+        <h2 className="profile__title">Профил на {user?.username}</h2>
+        <p className="profile__subtitle">Управлявай обявите си и качвай нови продукти.</p>
+      </header>
 
-      <section className="profile__upload">
+      <section className="profile-card profile__upload">
         <h3>Качи ново изделие</h3>
         <form onSubmit={handleSubmit} className="upload-form">
           <input
@@ -101,6 +111,7 @@ const ProfilePage = () => {
             value={form.description}
             onChange={handleChange}
             required
+            className="upload-form__full"
           />
           <input
             name="price"
@@ -119,12 +130,24 @@ const ProfilePage = () => {
             value={form.quantity}
             onChange={handleChange}
           />
-          <input type="file" accept="image/*" onChange={handleFile} required />
-          <button type="submit">Запази</button>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleFile}
+            className="upload-form__full"
+            required
+            ref={fileInputRef}
+          />
+          <div className="upload-form__actions upload-form__full">
+
+            <button type="submit">Запази</button>
+
+          </div>
         </form>
       </section>
 
-      <section className="profile__items">
+      <section className="profile-card profile__items">
         <h3>Моите изделия</h3>
         {loading ? (
           <p>Зареждане…</p>
