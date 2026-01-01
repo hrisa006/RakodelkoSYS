@@ -126,6 +126,107 @@
   margin-top: 1rem;
 }
 
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.orders-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.9rem 1rem;
+  background: #f6f2fb;
+  border: 1px solid #e2d9f3;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.orders-item:hover {
+  background: #efe8fb;
+  transform: translateY(-1px);
+}
+
+.orders-item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.orders-item__id {
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.orders-item__id:hover {
+  color: var(--color-accent);
+}
+
+.orders-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #5b5563;
+}
+
+.orders-item__products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.orders-item__link {
+  color: #3d3153;
+  text-decoration: none;
+  border-bottom: 1px dashed #cbbfe2;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.orders-item__link:hover {
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary);
+}
+
+.orders-item__more {
+  color: #6b6376;
+  font-size: 0.85rem;
+}
+
+.orders-item__summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.orders-item__total {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.orders-item__details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.orders-item__details:hover {
+  background: var(--color-primary-dark);
+}
+
 .item-card-wrapper {
   position: relative;
 }
@@ -198,5 +299,14 @@
 
   .upload-form button {
     width: 100%;
+  }
+
+  .orders-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .orders-item__summary {
+    align-items: flex-start;
   }
 }

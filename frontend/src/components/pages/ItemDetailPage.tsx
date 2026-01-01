@@ -33,6 +33,7 @@ const ItemDetailsPage = () => {
   const handleAddToCart = () => {
     if (!item) return;
     addToCart(item, 1);
+    alert("Продуктът е добавен в количката.");
   };
 
   const {

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
+import { useShop } from "../../../contexts/ShopContext";
 import {
   fetchMyItems,
   createItem,
@@ -14,6 +16,7 @@ import "./ProfilePage.css";
 
 const ProfilePage = () => {
   const { user } = useAuth();
+  const { orders, isLoadingOrders, items: shopItems } = useShop();
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingItemId, setEditingItemId] = useState<number | null>(null);
@@ -134,6 +137,13 @@ const ProfilePage = () => {
     }
   };
 
+  const recentOrders = [...orders]
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 5);
+
 
 
   return (
@@ -194,6 +204,76 @@ const ProfilePage = () => {
             <button type="submit">{editingItemId ? "Запази" : "Качи"}</button>
           </div>
         </form>
+      </section>
+
+      <section className="profile-card profile__orders">
+        <h3>Последни поръчки</h3>
+        {isLoadingOrders ? (
+          <p>Зареждане...</p>
+        ) : recentOrders.length === 0 ? (
+          <p>Нямате поръчки.</p>
+        ) : (
+          <div className="orders-list">
+            {recentOrders.map((order) => {
+              const orderItems = order.OrderItems ?? [];
+              const itemCount = orderItems.reduce(
+                (sum, oi) => sum + oi.quantity,
+                0
+              );
+              const dateLabel = new Date(order.createdAt).toLocaleDateString(
+                "bg-BG"
+              );
+              const totalLabel = Number(order.totalPrice || 0).toFixed(2);
+              const previewItems = orderItems.slice(0, 3);
+              const remainingCount = orderItems.length - previewItems.length;
+              return (
+                <div key={order.id} className="orders-item">
+                  <div className="orders-item__main">
+                    <Link
+                      to={`/orders/${order.id}/confirm`}
+                      className="orders-item__id">
+                      Поръчка #{order.id}
+                    </Link>
+                    <div className="orders-item__meta">
+                      <span>Дата: {dateLabel}</span>
+                      <span>Артикули: {itemCount}</span>
+                      <span>Статус: {order.status}</span>
+                    </div>
+                    <div className="orders-item__products">
+                      {previewItems.map((oi) => {
+                        const product = shopItems.find(
+                          (item) => item.id === oi.itemId
+                        );
+                        const title = product?.title || `Продукт #${oi.itemId}`;
+                        return (
+                          <Link
+                            key={`${order.id}-${oi.itemId}`}
+                            to={`/items/${oi.itemId}`}
+                            className="orders-item__link">
+                            {title}
+                          </Link>
+                        );
+                      })}
+                      {remainingCount > 0 && (
+                        <span className="orders-item__more">
+                          + още {remainingCount}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="orders-item__summary">
+                    <div className="orders-item__total">{totalLabel} лв.</div>
+                    <Link
+                      to={`/orders/${order.id}/confirm`}
+                      className="orders-item__details">
+                      Детайли
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       <section className="profile-card profile__items">

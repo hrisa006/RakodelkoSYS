@@ -24,6 +24,13 @@ export default function Home() {
     load();
   }, []);
 
+  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    alert("Абонаментът е потвърден. Благодарим!");
+    e.currentTarget.reset();
+  };
+
+
   return (
     <main className="home">
       <section className="home__hero">
@@ -88,7 +95,7 @@ export default function Home() {
           <h3>Запишете се за нашия бюлетин!</h3>
           <form
             className="newsletter__form"
-            onSubmit={(e) => e.preventDefault()}>
+            onSubmit={handleNewsletterSubmit}>
             <input type="email" placeholder="Въведете своя имейл..." required />
             <button type="submit">Запиши</button>
           </form>
