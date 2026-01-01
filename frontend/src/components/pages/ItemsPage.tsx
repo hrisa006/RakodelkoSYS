@@ -11,14 +11,14 @@ const ItemsPage: React.FC = () => {
     if (items.length === 0) fetchItems();
   }, [fetchItems, items.length]);
 
-  if (isLoadingItems) return <p style={{ textAlign: "center" }}>Зареждане…</p>;
+  if (isLoadingItems) return <p className="cart-empty">Зареждане…</p>;
 
   return (
     <section className="items-page" >
       <h2 className="page-title">Всички изделия</h2>
 
       {items.length === 0 ? (
-        <p style={{ textAlign: "center" }}>Няма налични изделия.</p>
+        <p className="cart-empty">Няма налични изделия.</p>
       ) : (
         <div className="items-grid">
           {items.map((it) => (

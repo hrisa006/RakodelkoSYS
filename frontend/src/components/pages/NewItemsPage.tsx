@@ -29,7 +29,7 @@ const NewItemsPage = () => {
       {loading ? (
         <p>Зареждане...</p>
       ) : items.length === 0 ? (
-        <p>Няма нови изделия</p>
+        <p className="cart-empty">Няма налични изделия</p>
       ) : (
         <div className="items-grid">
           {items.map((item) => (

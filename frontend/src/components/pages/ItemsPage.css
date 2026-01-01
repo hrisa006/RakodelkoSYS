@@ -7,3 +7,18 @@
   padding: 0 4.5rem;
   margin: 2.2rem 0 0;
 }
+
+.cart-empty {
+  max-width: 680px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  font-family: Comfortaa, sans-serif;
+  background: #fff;
+  border: 1px dashed #e2d9f3;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4a3f59;
+  box-shadow: 0 12px 28px rgba(60, 40, 90, 0.08);
+}

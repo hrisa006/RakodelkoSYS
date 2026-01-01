@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import * as itemsApi from "../api/items";
 import * as cartApi from "../api/cart";
 import * as ordersApi from "../api/orders";
@@ -74,7 +80,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoadingOrders, setLO] = useState(false);
   const { user } = useAuth();
 
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     setLI(true);
     try {
       const data = await itemsApi.fetchItems();
@@ -82,7 +88,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({
     } finally {
       setLI(false);
     }
-  };
+  }, []);
 
   const loadCart = async () => {
     setLC(true);
