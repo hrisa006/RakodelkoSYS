@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -16,6 +16,8 @@ interface ReviewForm {
   content: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ItemDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const [item, setItem] = useState<Item | null>(null);
@@ -26,12 +28,13 @@ const ItemDetailsPage = () => {
   const { user } = useAuth();
   const { addToCart } = useShop();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleAddToCart = () => {
     if (!item) return;
     if (!user) {
       alert("Моля, влезте в профила си, за да добавите в количката.");
-      navigate("/login");
+      navigate("/login", { state: { redirectTo: location.pathname } });
       return;
     }
     addToCart(item.id, 1);
@@ -66,6 +69,11 @@ const ItemDetailsPage = () => {
 
   const onSubmit = async (data: ReviewForm) => {
     if (!id) return;
+    if (!user) {
+      alert("Моля, влезте в профила си, за да добавите ревю за определения продукт.");
+      navigate("/login", { state: { redirectTo: location.pathname } });
+      return;
+    }
     try {
       const newRev = await addReview(Number(id), data);
       setReviews((prev) => [newRev, ...prev]);
@@ -80,32 +88,32 @@ const ItemDetailsPage = () => {
       ? 0
       : reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 
+  const slides =
+    mediaList.length > 0
+      ? mediaList.map((m) => (
+          <div key={m.id}>
+            <img src={`${API_URL}${m.url}`} alt={m.altText || item?.title} />
+          </div>
+        ))
+      : [
+          <div key="default">
+            <img src={`${API_URL}${item?.imageUrl}`} alt={item?.title} />
+          </div>,
+        ];
+
   if (loading) return <p>Зареждане...</p>;
   if (!item) return <p>Няма такова изделие</p>;
 
   return (
     <div className="item-detail-container">
-      <Carousel showThumbs={false} dynamicHeight={false}>
-        {mediaList.length > 0
-          ? mediaList.map((m) => (
-              <div key={m.id}>
-                <img
-                  src={`http://localhost:8080${m.url}`}
-                  alt={m.altText || item.title}
-                />
-              </div>
-            ))
-          : [
-              <div>
-                <img
-                  src={`http://localhost:8080${item.imageUrl}`}
-                  alt={item.title}
-                />
-              </div>,
-            ]}
-      </Carousel>
+      <div className="item-detail-top">
+        <div className="item-media">
+          <Carousel showThumbs={false} dynamicHeight={false}>
+            {slides}
+          </Carousel>
+        </div>
 
-      <div className="item-info">
+        <div className="item-info">
         <h2 className="item-title">{item.title}</h2>
         <p className="item-price">{item.price} лв.</p>
         <p className="item-description">{item.description}</p>
@@ -119,6 +127,7 @@ const ItemDetailsPage = () => {
           ) : (
             <p>Изчерпано</p>
           )}
+        </div>
         </div>
       </div>
 
