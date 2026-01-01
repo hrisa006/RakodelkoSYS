@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { fetchMyItems, createItem, removeItem } from "../../../api/items";
+import {
+  fetchMyItems,
+  createItem,
+  removeItem,
+  updateItem,
+} from "../../../api/items";
 import { uploadImage } from "../../../api/media";
 import type { Item } from "../../../types/types";
 import ItemCard from "../../ItemCard";
@@ -11,6 +16,7 @@ const ProfilePage = () => {
   const { user } = useAuth();
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editingItemId, setEditingItemId] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [form, setForm] = useState({
@@ -46,17 +52,28 @@ const ProfilePage = () => {
     e.preventDefault();
 
     try {
-      const newItem = await createItem({
+      const payload = {
         title: form.title,
         description: form.description,
         price: parseFloat(form.price),
         quantity: parseInt(form.quantity),
-      });
+      };
 
-      if (form.images.length > 0) {
-        await Promise.all(
-          form.images.map((image) => uploadImage(newItem.id, image))
-        );
+      if (editingItemId) {
+        await updateItem(editingItemId, payload);
+        if (form.images.length > 0) {
+          await Promise.all(
+            form.images.map((image) => uploadImage(editingItemId, image))
+          );
+        }
+        setEditingItemId(null);
+      } else {
+        const newItem = await createItem(payload);
+        if (form.images.length > 0) {
+          await Promise.all(
+            form.images.map((image) => uploadImage(newItem.id, image))
+          );
+        }
       }
 
       await loadItems();
@@ -71,8 +88,8 @@ const ProfilePage = () => {
         fileInputRef.current.value = "";
       }
     } catch (err) {
-      console.error("[createItem] error", err);
-      alert("Грешка при създаване на изделие.");
+      console.error("[saveItem] error", err);
+      alert("Грешка при запазване на продукта.");
     }
   };
 
@@ -88,6 +105,37 @@ const ProfilePage = () => {
     }
   };
 
+  const handleEdit = (item: Item) => {
+    setEditingItemId(item.id);
+    setForm({
+      title: item.title,
+      description: item.description,
+      price: item.price.toString(),
+      quantity: item.quantity.toString(),
+      images: [],
+    });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelEdit = () => {
+    setEditingItemId(null);
+    setForm({
+      title: "",
+      description: "",
+      price: "",
+      quantity: "1",
+      images: [],
+    });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+
+
   return (
     <main className="profile">
       <header className="profile__header">
@@ -96,7 +144,7 @@ const ProfilePage = () => {
       </header>
 
       <section className="profile-card profile__upload">
-        <h3>Качи ново изделие</h3>
+        <h3>{editingItemId ? "Редактирай продукт" : "Качи нов продукт"}</h3>
         <form onSubmit={handleSubmit} className="upload-form">
           <input
             name="title"
@@ -136,13 +184,14 @@ const ProfilePage = () => {
             multiple
             onChange={handleFile}
             className="upload-form__full"
-            required
+            required={!editingItemId}
             ref={fileInputRef}
           />
           <div className="upload-form__actions upload-form__full">
-
-            <button type="submit">Запази</button>
-
+            {editingItemId && (
+              <button type="button" className="btn-secondary" onClick={cancelEdit}>Откажи</button>
+            )}
+            <button type="submit">{editingItemId ? "Запази" : "Качи"}</button>
           </div>
         </form>
       </section>
@@ -158,6 +207,12 @@ const ProfilePage = () => {
             {items.map((it) => (
               <div className="item-card-wrapper" key={it.id}>
                 <ItemCard item={it} />
+                <button
+                  className="btn-edit"
+                  onClick={() => handleEdit(it)}
+                  title="Редактирай продукт">
+                  ✎
+                </button>
                 <button
                   className="btn-delete"
                   onClick={() => handleDelete(it.id)}

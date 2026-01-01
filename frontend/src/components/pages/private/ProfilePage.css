@@ -93,6 +93,7 @@
 .upload-form__actions {
   display: flex;
   justify-content: flex-end;
+  gap: 0.75rem;
 }
 
 .upload-form button {
@@ -108,6 +109,17 @@
 
 .upload-form button:hover {
   background: var(--color-primary-dark);
+}
+
+.upload-form .btn-secondary {
+  background: transparent;
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-primary);
+}
+
+.upload-form .btn-secondary:hover {
+  background: var(--color-primary);
+  color: #fff;
 }
 
 .profile__items .item-grid {
@@ -144,6 +156,30 @@
 
 .btn-delete:hover {
   background: var(--color-accent-muted);
+  transform: translateY(-1px);
+}
+
+.btn-edit {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: var(--color-primary-dark);
+  border: 1px solid #e2d9f3;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-edit:hover {
+  background: #f3effa;
   transform: translateY(-1px);
 }
 
