@@ -11,6 +11,7 @@ export default function Header() {
   const { user, logout } = useAuth();
   const { cart } = useShop();
   const navigate = useNavigate();
+  const totalQty = cart.reduce((sum, ci) => sum + ci.quantity, 0);
 
   const handleProfileClick = () => {
     if (user) {
@@ -45,9 +46,12 @@ export default function Header() {
               <IoPersonSharp />
             </button>
 
-            <button onClick={() => navigate("/cart")} title="Количка">
+            <button
+              onClick={() => navigate("/cart")}
+              title="Количка"
+              className="cart-button">
               <IoCart className="icon-cart" style={{ fontSize: "20px" }} />
-              {cart.length > 0 && <span className="badge">{cart.length}</span>}
+              {totalQty > 0 && <span className="badge">{totalQty}</span>}
             </button>
 
             {user && (

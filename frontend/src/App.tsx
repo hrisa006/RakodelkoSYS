@@ -37,14 +37,7 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route
-            path="/cart"
-            element={
-              <RequireAuth>
-                <CartPage />
-              </RequireAuth>
-            }
-          />
+          <Route path="/cart" element={<CartPage />} />
           <Route
             path="/orders/:id/confirm"
             element={

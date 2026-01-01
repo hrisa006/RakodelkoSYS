@@ -32,12 +32,7 @@ const ItemDetailsPage = () => {
 
   const handleAddToCart = () => {
     if (!item) return;
-    if (!user) {
-      alert("Моля, влезте в профила си, за да добавите в количката.");
-      navigate("/login", { state: { redirectTo: location.pathname } });
-      return;
-    }
-    addToCart(item.id, 1);
+    addToCart(item, 1);
   };
 
   const {
@@ -171,3 +166,4 @@ const ItemDetailsPage = () => {
 };
 
 export default ItemDetailsPage;
+

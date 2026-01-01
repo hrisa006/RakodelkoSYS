@@ -1,9 +1,12 @@
 import { useShop } from "../../../contexts/ShopContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./CartPage.css";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
   const { cart, isLoadingCart, updateCartQty, removeFromCart, checkout } =
     useShop();
 
@@ -16,6 +19,11 @@ const CartPage = () => {
   if (cart.length === 0) return <p style={{fontSize: "25px", fontWeight: "bold", textAlign: "-moz-initial"}}>Количката е празна.</p>;
 
   const handleCheckout = async () => {
+    if (!user) {
+      alert("Моля влезте в профила си, за да завършите поръчката си.");
+      navigate("/login", { state: { redirectTo: location.pathname } });
+      return;
+    }
     try {
       const order = await checkout();
       console.log("ORDER:", order);
