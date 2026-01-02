@@ -13,7 +13,7 @@ export default function OrderConfirmPage() {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const [order, setOrder] = useState<Order>();
-  const { clearCart } = useShop();
+  const { clearCart, refreshOrders } = useShop();
 
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
@@ -24,6 +24,7 @@ export default function OrderConfirmPage() {
           const confirmed = await confirmOrderPayment(+id, sessionId);
           setOrder(confirmed);
           await clearCart();
+          await refreshOrders();
           return;
         }
         const data = await fetchOrder(+id);

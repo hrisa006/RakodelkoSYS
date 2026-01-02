@@ -26,6 +26,7 @@ interface ShopContextType {
   updateCartQty: (itemId: number, qty: number) => Promise<void>;
   clearCart: () => Promise<void>;
   checkout: () => Promise<{ url: string; orderId: number }>;
+  refreshOrders: () => Promise<void>;
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
@@ -176,6 +177,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const refreshOrders = async () => {
+    await loadOrders();
+  };
+
   const checkout = async () => {
     if (!user) {
       throw new Error("auth_required");
@@ -228,6 +233,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({
     updateCartQty,
     clearCart,
     checkout,
+    refreshOrders,
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
