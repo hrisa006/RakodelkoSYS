@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./App.css";
 
 import MainLayout from "./components/templates/MainLayout";
@@ -15,11 +14,8 @@ import CartPage from "./components/pages/CartPage";
 import ProfilePage from "./components/pages/private/ProfilePage";
 import RegisterPage from "./components/pages/auth/RegisterPage";
 
-const queryClient = new QueryClient();
-
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
@@ -50,7 +46,6 @@ function App() {
           />
         </Route>
       </Routes>
-    </QueryClientProvider>
   );
 }
 
